@@ -1,0 +1,28 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Log file
+*.log
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
