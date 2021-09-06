@@ -1,0 +1,75 @@
+package com.bacancy.ecommerce.dto;
+
+import java.util.Date;
+
+
+public class OrderDto {
+
+	private Long id;
+	private String status;
+	private int quantity;
+	private String shippingAddress;
+	
+	private double amount;
+	
+	private String payment;
+	
+	private Date orderDate;
+	
+	private ProductDto productDto;
+	private UserDto userDto;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public String getShippingAddress() {
+		return shippingAddress;
+	}
+	public void setShippingAddress(String shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	public String getPayment() {
+		return payment;
+	}
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
+	public Date getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+	public ProductDto getProductDto() {
+		return productDto;
+	}
+	public void setProductDto(ProductDto productDto) {
+		this.productDto = productDto;
+	}
+	public UserDto getUserDto() {
+		return userDto;
+	}
+	public void setUserDto(UserDto userDto) {
+		this.userDto = userDto;
+	}	
+}

@@ -14,36 +14,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bacancy.ecommerce.dto.CategoryDto;
+import com.bacancy.ecommerce.dto.OrderDto;
 import com.bacancy.ecommerce.dto.ProductDto;
 import com.bacancy.ecommerce.dto.UserDto;
-import com.bacancy.ecommerce.service.ProductService;
+import com.bacancy.ecommerce.service.OrderService;
 
 @RestController
-@RequestMapping("/products")
-public class ProductController {
+@RequestMapping("/orders")
+public class OrderController {
+	
 	@Autowired
-	private ProductService productService;
-
+	private OrderService orderService;
+	
 	@GetMapping
-	public ResponseEntity<List<ProductDto>> findAllProducts(){
-		List<ProductDto> products = productService.allProducts();
-		return new ResponseEntity(products, HttpStatus.OK);
+	public ResponseEntity<List<OrderDto>> findAllOrders(){
+		List<OrderDto> orders = orderService.allOrders();
+		return new ResponseEntity(orders, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ProductDto> findProduct(@PathVariable(name = "id") Long id) {
-		return new ResponseEntity( productService.getProductById(id),HttpStatus.OK);
+	public ResponseEntity<OrderDto> findOrder(@PathVariable(name = "id") Long id) {
+		return new ResponseEntity( orderService.getOrderById(id),HttpStatus.OK);
 	}
 	
-	@PostMapping("/{userId}")
-	public ResponseEntity<ProductDto> saveProduct(@PathVariable(name = "userId") Long userId,@PathVariable(name = "categoryId") Long categoryId,@RequestBody ProductDto productDto) {
-		return new ResponseEntity(productService.addProduct(userId, categoryId, productDto), HttpStatus.OK) ;
+	@PostMapping("/{userId}/{productId}")
+	public ResponseEntity<OrderDto> saveOrder(@PathVariable(name = "userId") Long userId,@PathVariable(name = "productId") Long productId,@RequestBody OrderDto orderDto) {
+		return new ResponseEntity(orderService.addOrder(userId, productId, orderDto), HttpStatus.OK) ;
 		
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity deleteProduct(@PathVariable(name="id") Long id) {
-		productService.deleteProduct(id);
+	public ResponseEntity deleteOrder(@PathVariable(name="id") Long id) {
+		orderService.deleteOrder(id);
 		return new ResponseEntity(HttpStatus.OK); 
 	}
+
 }
