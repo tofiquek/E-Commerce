@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bacancy.ecommerce.dto.CategoryDto;
 import com.bacancy.ecommerce.dto.ProductDto;
-import com.bacancy.ecommerce.dto.UserDto;
 import com.bacancy.ecommerce.service.ProductService;
 
 @RestController

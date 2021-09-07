@@ -35,6 +35,9 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public ProductDto addProduct(Long userId,Long categoryId,ProductDto productDto) {
 		UserDto userDto = userService.getUserById(userId);
+		if(userDto.getRoleId()!=0) {
+			throw new RuntimeException();
+		}
 		CategoryDto categoryDto = categoryService.getCategoryById(categoryId);
 		productDto.setUserDto(userDto);
 		productDto.setCategoryDto(categoryDto);

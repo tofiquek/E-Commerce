@@ -3,7 +3,6 @@ package com.bacancy.ecommerce.service;
 import java.util.List;
 
 import com.bacancy.ecommerce.dto.OrderDto;
-import com.bacancy.ecommerce.dto.ProductDto;
 
 public interface OrderService {
 

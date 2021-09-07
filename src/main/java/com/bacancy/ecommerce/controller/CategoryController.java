@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bacancy.ecommerce.dto.CategoryDto;
 import com.bacancy.ecommerce.dto.UserDto;
 import com.bacancy.ecommerce.service.CategoryService;
-import com.bacancy.ecommerce.service.UserService;
 
 @RestController
 @RequestMapping("/categories")

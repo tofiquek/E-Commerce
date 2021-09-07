@@ -30,6 +30,9 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public CategoryDto addCategory(Long userId,CategoryDto categoryDto) {
 		UserDto userDto = userService.getUserById(userId);
+		if(userDto.getRoleId()!=0) {
+			throw new RuntimeException();
+		}
 		categoryDto.setUser(userDto);
 		Category category = modelMapper.map(categoryDto, Category.class);
 		Category savedCategory = categoryRepository.save(category);
