@@ -13,6 +13,7 @@ import com.bacancy.ecommerce.dto.OrderDto;
 import com.bacancy.ecommerce.dto.ProductDto;
 import com.bacancy.ecommerce.dto.UserDto;
 import com.bacancy.ecommerce.entity.Order;
+import com.bacancy.ecommerce.exception.OrderNotFoundException;
 import com.bacancy.ecommerce.repository.OrderRepository;
 import com.bacancy.ecommerce.service.OrderService;
 import com.bacancy.ecommerce.service.ProductService;
@@ -50,11 +51,10 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public OrderDto getOrderById(Long id) {
 		Optional<Order> orderOptional = orderRepository.findById(id);
-		OrderDto orderDto = null;
-		if (orderOptional.isPresent()) {
-			
-			orderDto = modelMapper.map(orderOptional.get(), OrderDto.class);
+		if(!orderOptional.isPresent()) {
+			throw new OrderNotFoundException("Order not Found Exception by id "+id);
 		}
+		OrderDto	orderDto = modelMapper.map(orderOptional.get(), OrderDto.class);
 		return orderDto;
 	}
 

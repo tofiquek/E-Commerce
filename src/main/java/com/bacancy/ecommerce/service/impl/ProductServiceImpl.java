@@ -12,6 +12,8 @@ import com.bacancy.ecommerce.dto.CategoryDto;
 import com.bacancy.ecommerce.dto.ProductDto;
 import com.bacancy.ecommerce.dto.UserDto;
 import com.bacancy.ecommerce.entity.Product;
+import com.bacancy.ecommerce.exception.NotAccessAbleException;
+import com.bacancy.ecommerce.exception.ProductNotFoundException;
 import com.bacancy.ecommerce.repository.ProductRepository;
 import com.bacancy.ecommerce.service.CategoryService;
 import com.bacancy.ecommerce.service.ProductService;
@@ -36,7 +38,7 @@ public class ProductServiceImpl implements ProductService{
 	public ProductDto addProduct(Long userId,Long categoryId,ProductDto productDto) {
 		UserDto userDto = userService.getUserById(userId);
 		if(userDto.getRoleId()!=0) {
-			throw new RuntimeException();
+			throw new NotAccessAbleException("Client does not have permission to add Product");
 		}
 		CategoryDto categoryDto = categoryService.getCategoryById(categoryId);
 		productDto.setUserDto(userDto);
@@ -51,11 +53,10 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public ProductDto getProductById(Long id) {
 		Optional<Product> productOptional = productRepository.findById(id);
-		ProductDto productDto = null;
-		if (productOptional.isPresent()) {
-			
-			productDto = modelMapper.map(productOptional.get(), ProductDto.class);
+		if(!productOptional.isPresent()) {
+			throw new ProductNotFoundException("Product not found by id = "+id);
 		}
+		ProductDto	productDto = modelMapper.map(productOptional.get(), ProductDto.class);
 		return productDto;
 	}
 

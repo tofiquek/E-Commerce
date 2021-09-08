@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.bacancy.ecommerce.dto.CategoryDto;
 import com.bacancy.ecommerce.dto.UserDto;
 import com.bacancy.ecommerce.entity.Category;
+import com.bacancy.ecommerce.exception.CategoryNotFoundException;
+import com.bacancy.ecommerce.exception.NotAccessAbleException;
 import com.bacancy.ecommerce.repository.CategoryRepository;
 import com.bacancy.ecommerce.service.CategoryService;
 import com.bacancy.ecommerce.service.UserService;
@@ -31,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService{
 	public CategoryDto addCategory(Long userId,CategoryDto categoryDto) {
 		UserDto userDto = userService.getUserById(userId);
 		if(userDto.getRoleId()!=0) {
-			throw new RuntimeException();
+			throw new NotAccessAbleException("Client has not Access to Add Category");
 		}
 		categoryDto.setUser(userDto);
 		Category category = modelMapper.map(categoryDto, Category.class);
@@ -43,11 +45,10 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public CategoryDto getCategoryById(Long id) {
 		Optional<Category> categoryOptional = categoryRepository.findById(id);
-		CategoryDto categoryDto = null;
-		if (categoryOptional.isPresent()) {
-			
-			categoryDto = modelMapper.map(categoryOptional.get(), CategoryDto.class);
+		if(!categoryOptional.isPresent()) {
+			throw new CategoryNotFoundException("Category Not found by id "+id);
 		}
+		CategoryDto	categoryDto = modelMapper.map(categoryOptional.get(), CategoryDto.class);
 		return categoryDto;
 	}
 

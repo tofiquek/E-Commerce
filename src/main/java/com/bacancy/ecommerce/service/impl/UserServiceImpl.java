@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.bacancy.ecommerce.dto.UserDto;
 import com.bacancy.ecommerce.entity.User;
+import com.bacancy.ecommerce.exception.UserNotFoundException;
 import com.bacancy.ecommerce.repository.UserRepository;
 import com.bacancy.ecommerce.service.UserService;
 
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDto addUser(UserDto userDto) {
 		logger.info("addUser Method Started");
+		
 		User user = modelMapper.map(userDto, User.class);
 		User savedUser = userRepository.save(user);
 		UserDto savedUserDto = modelMapper.map(savedUser, UserDto.class);
@@ -38,14 +40,11 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto getUserById(Long id) {
-		logger.info("getUserById Method Started");
 		Optional<User> userOptional = userRepository.findById(id);
-		UserDto userDto = null;
-		if (userOptional.isPresent()) {
-			
-			userDto = modelMapper.map(userOptional.get(), UserDto.class);
+		if(!userOptional.isPresent()) {
+			throw new UserNotFoundException("User not found by id "+id);
 		}
-		logger.info("User get Successfully & getUserById Method Ended");
+		UserDto userDto = modelMapper.map(userOptional.get(), UserDto.class);
 		return userDto;
 	}
 
