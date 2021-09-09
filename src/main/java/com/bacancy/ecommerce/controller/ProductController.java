@@ -33,7 +33,7 @@ public class ProductController {
 		return new ResponseEntity( productService.getProductById(id),HttpStatus.OK);
 	}
 	
-	@PostMapping("/{userId}")
+	@PostMapping("/{userId}/{categoryId}")
 	public ResponseEntity<ProductDto> saveProduct(@PathVariable(name = "userId") Long userId,@PathVariable(name = "categoryId") Long categoryId,@RequestBody ProductDto productDto) {
 		return new ResponseEntity(productService.addProduct(userId, categoryId, productDto), HttpStatus.OK) ;
 		

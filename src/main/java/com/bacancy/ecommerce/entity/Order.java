@@ -1,6 +1,7 @@
 package com.bacancy.ecommerce.entity;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +38,7 @@ public class Order {
 	private String payment;
 	
 	@Column(name = "order_date")
-	private Date orderDate;
+	private LocalDate orderDate;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -83,10 +84,10 @@ public class Order {
 	public void setPayment(String payment) {
 		this.payment = payment;
 	}
-	public Date getOrderDate() {
+	public LocalDate getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
 	}
 	public Product getProduct() {

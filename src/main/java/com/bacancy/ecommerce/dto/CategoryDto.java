@@ -10,7 +10,6 @@ public class CategoryDto {
 	private String description;
 	private String modifiedBy;
 	private Date modifiedDate;
-	private UserDto user;
 	
 	public Long getId() {
 		return id;
@@ -42,13 +41,5 @@ public class CategoryDto {
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-	public UserDto getUser() {
-		return user;
-	}
-	public void setUser(UserDto user) {
-		this.user = user;
-	}
-	
-	
 	
 }

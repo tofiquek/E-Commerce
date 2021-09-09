@@ -1,6 +1,6 @@
 package com.bacancy.ecommerce.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ public class OrderTrack {
 	@Column(name = "details")
 	private String details;
 	@Column(name = "date")
-	private Date date;
+	private LocalDate date;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -56,11 +56,11 @@ public class OrderTrack {
 		this.details = details;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

@@ -8,6 +8,8 @@ public interface CategoryService {
 	
 	CategoryDto addCategory(Long userId,CategoryDto categoryDto);
 	
+	CategoryDto updateCategory(Long userId,CategoryDto categoryDto);
+	
 	CategoryDto getCategoryById(Long id);
 	
 	List<CategoryDto> allCategory();

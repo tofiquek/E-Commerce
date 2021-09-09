@@ -35,7 +35,6 @@ public class CategoryServiceImpl implements CategoryService{
 		if(userDto.getRoleId()!=0) {
 			throw new NotAccessAbleException("Client has not Access to Add Category");
 		}
-		categoryDto.setUser(userDto);
 		Category category = modelMapper.map(categoryDto, Category.class);
 		Category savedCategory = categoryRepository.save(category);
 		CategoryDto savedCategoryDto = modelMapper.map(savedCategory, CategoryDto.class);
@@ -62,6 +61,18 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public void deleteCategory(Long id) {
 		categoryRepository.deleteById(id);
+	}
+
+	@Override
+	public CategoryDto updateCategory(Long userId, CategoryDto categoryDto) {
+		UserDto userDto = userService.getUserById(userId);
+		if(userDto.getRoleId()!=0) {
+			throw new NotAccessAbleException("Client has not Access to Update Category");
+		}
+		Category category = modelMapper.map(categoryDto, Category.class);
+		Category savedCategory = categoryRepository.save(category);
+		CategoryDto savedCategoryDto = modelMapper.map(savedCategory, CategoryDto.class);
+		return savedCategoryDto;
 	}
 
 }

@@ -18,7 +18,7 @@ public class UserProfile {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "email")
+	@Column(name = "name")
 	private String name;
 	
 	@Column(name="date_of_birth")

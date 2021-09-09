@@ -16,8 +16,8 @@ public class OrderDto {
 	
 	private Date orderDate;
 	
-	private ProductDto productDto;
-	private UserDto userDto;
+	private ProductDto product;
+	private UserDto user;
 	public Long getId() {
 		return id;
 	}
@@ -60,16 +60,17 @@ public class OrderDto {
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
-	public ProductDto getProductDto() {
-		return productDto;
+	public ProductDto getProduct() {
+		return product;
 	}
-	public void setProductDto(ProductDto productDto) {
-		this.productDto = productDto;
+	public void setProduct(ProductDto product) {
+		this.product = product;
 	}
-	public UserDto getUserDto() {
-		return userDto;
+	public UserDto getUser() {
+		return user;
 	}
-	public void setUserDto(UserDto userDto) {
-		this.userDto = userDto;
-	}	
+	public void setUser(UserDto user) {
+		this.user = user;
+	}
+	
 }

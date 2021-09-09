@@ -41,12 +41,21 @@ public class ProductServiceImpl implements ProductService{
 			throw new NotAccessAbleException("Client does not have permission to add Product");
 		}
 		CategoryDto categoryDto = categoryService.getCategoryById(categoryId);
-		productDto.setUserDto(userDto);
-		productDto.setCategoryDto(categoryDto);
+		productDto.setUser(userDto);
+		productDto.setCategory(categoryDto);
 		Product product = modelMapper.map(productDto, Product.class);
 		Product savedProduct= productRepository.save(product);
 		ProductDto savedProductDto = modelMapper.map(savedProduct, ProductDto.class);
 		return savedProductDto;
+		
+	}
+	
+	@Override
+	public ProductDto updateProduct(ProductDto productDto) {
+		Product product = modelMapper.map(productDto, Product.class);
+		Product updatedProduct= productRepository.save(product);
+		ProductDto updatedProductDto = modelMapper.map(updatedProduct, ProductDto.class);
+		return updatedProductDto;
 		
 	}
 

@@ -26,7 +26,7 @@ public class User {
 	private int roleId;
 	
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne( cascade = CascadeType.ALL)
 	private UserProfile userProfile;
 	
 	public Long getId() {

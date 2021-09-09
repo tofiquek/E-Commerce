@@ -1,7 +1,6 @@
 package com.bacancy.ecommerce.dto;
 
 
-
 public class ProductDto {
 
 	private Long id;
@@ -9,8 +8,8 @@ public class ProductDto {
 	private String description;
 	private double price;
 	private int totalStock;
-	private UserDto userDto;
-	private CategoryDto  categoryDto;
+	private UserDto user;
+	private CategoryDto  category;
 	public Long getId() {
 		return id;
 	}
@@ -41,19 +40,19 @@ public class ProductDto {
 	public void setTotalStock(int totalStock) {
 		this.totalStock = totalStock;
 	}
-	public UserDto getUserDto() {
-		return userDto;
+	public UserDto getUser() {
+		return user;
 	}
-	public void setUserDto(UserDto userDto) {
-		this.userDto = userDto;
+	public void setUser(UserDto user) {
+		this.user = user;
 	}
-	public CategoryDto getCategoryDto() {
-		return categoryDto;
+	public CategoryDto getCategory() {
+		return category;
 	}
-	public void setCategoryDto(CategoryDto categoryDto) {
-		this.categoryDto = categoryDto;
+	public void setCategory(CategoryDto category) {
+		this.category = category;
 	}
-
+	
 	
 
 }

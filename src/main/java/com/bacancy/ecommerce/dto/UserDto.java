@@ -5,7 +5,7 @@ public class UserDto {
 	private Long id;
 	private String email;
 	private int roleId;
-	private UserProfileDto userProfileDto;
+	private UserProfileDto userProfile;
 	public Long getId() {
 		return id;
 	}
@@ -24,11 +24,11 @@ public class UserDto {
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
-	public UserProfileDto getUserProfileDto() {
-		return userProfileDto;
+	public UserProfileDto getUserProfile() {
+		return userProfile;
 	}
-	public void setUserProfileDto(UserProfileDto userProfileDto) {
-		this.userProfileDto = userProfileDto;
+	public void setUserProfile(UserProfileDto userProfile) {
+		this.userProfile = userProfile;
 	}
 	
 	

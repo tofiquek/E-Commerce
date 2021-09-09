@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService{
 	public List<UserDto> allUsers() {
 		logger.info("allUsers Method Started");
 		List<User> users = userRepository.findAll();
+		System.out.println(users.get(0).getUserProfile().getId());
 		List<UserDto> usersDto = users.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
 		logger.info("allUser Method Ended");
 		return usersDto;
