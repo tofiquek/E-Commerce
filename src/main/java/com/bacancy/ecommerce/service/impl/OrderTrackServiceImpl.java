@@ -28,7 +28,7 @@ public class OrderTrackServiceImpl implements OrderTrackService{
 	private ModelMapper modelMapper;
 
 	@Override
-	public OrderTrackDto addOrder(Long orderId, OrderTrackDto orderTrackDto) {
+	public OrderTrackDto addOrderTrack(Long orderId, OrderTrackDto orderTrackDto) {
 		OrderDto orderDto = orderService.getOrderById(orderId);
 		orderTrackDto.setOrderDto(orderDto);
 		OrderTrack orderTrack = modelMapper.map(orderTrackDto, OrderTrack.class);

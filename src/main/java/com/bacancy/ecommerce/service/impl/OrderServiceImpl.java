@@ -15,6 +15,7 @@ import com.bacancy.ecommerce.dto.OrderTrackDto;
 import com.bacancy.ecommerce.dto.ProductDto;
 import com.bacancy.ecommerce.dto.UserDto;
 import com.bacancy.ecommerce.entity.Order;
+import com.bacancy.ecommerce.exception.NotAccessAbleException;
 import com.bacancy.ecommerce.exception.OrderNotFoundException;
 import com.bacancy.ecommerce.repository.OrderRepository;
 import com.bacancy.ecommerce.service.OrderService;
@@ -63,10 +64,12 @@ public class OrderServiceImpl implements OrderService{
 		OrderTrackDto orderTrackDto = new OrderTrackDto();
 		orderTrackDto.setStatus(PLACED);
 		orderTrackDto.setDate(LocalDate.now());
-		orderTrackService.addOrder(savedOrderDto.getId(), orderTrackDto);
+		orderTrackService.addOrderTrack(savedOrderDto.getId(), orderTrackDto);
 		}
 		return savedOrderDto;
 	}
+	
+	
 
 	@Override
 	public OrderDto getOrderById(Long id) {
@@ -89,5 +92,56 @@ public class OrderServiceImpl implements OrderService{
 	public void deleteOrder(Long id) {
 		orderRepository.deleteById(id);
 	}
+
+
+
+	@Override
+	public OrderDto orderStatus(Long userId, Long orderId, String status) {
+		UserDto userDto = userService.getUserById(userId);
+		if(userDto.getRoleId()!=0) {
+			throw new NotAccessAbleException("Only admin can Confirm or Dilivered the Order");
+		}
+		OrderDto orderDto = getOrderById(orderId);
+		if(status.equalsIgnoreCase(CONFIRM)) {
+			orderDto.setStatus(CONFIRM);
+		}
+		if(orderDto.getStatus().equalsIgnoreCase(CONFIRM) && status.equalsIgnoreCase(DILIVERED) ) {
+			orderDto.setStatus(DILIVERED);
+		}
+		Order order = modelMapper.map(orderDto, Order.class);
+		Order savedOrder = orderRepository.save(order);
+		OrderDto savedOrderDto = modelMapper.map(savedOrder, OrderDto.class);
+		if(savedOrder!=null) {
+		OrderTrackDto orderTrackDto = new OrderTrackDto();
+		orderTrackDto.setStatus(savedOrderDto.getStatus());
+		orderTrackDto.setDate(LocalDate.now());
+		orderTrackService.addOrderTrack(savedOrderDto.getId(), orderTrackDto);
+		}
+		return savedOrderDto;
+	}
+
+
+
+	@Override
+	public OrderDto cancelOrder( Long orderId) {
+		OrderDto orderDto = getOrderById(orderId);
+			orderDto.setStatus(CANCEL);
+		ProductDto productDto = orderDto.getProduct();
+		Order order = modelMapper.map(orderDto, Order.class);
+		Order savedOrder = orderRepository.save(order);
+		OrderDto savedOrderDto = modelMapper.map(savedOrder, OrderDto.class);
+		if(savedOrder!=null) {
+			productDto.setTotalStock(productDto.getTotalStock()+orderDto.getQuantity());
+			productService.updateProduct(productDto);
+			OrderTrackDto orderTrackDto = new OrderTrackDto();
+			orderTrackDto.setStatus(CANCEL);
+			orderTrackDto.setDate(LocalDate.now());
+			orderTrackService.addOrderTrack(savedOrderDto.getId(), orderTrackDto);
+		}
+		return savedOrderDto;
+	
+	}
+	
+	
 
 }

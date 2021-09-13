@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,10 +41,14 @@ public class OrderController {
 		
 	}
 	
+	@PutMapping("/{userId}/{orderId}/{status}")
+	public ResponseEntity<OrderDto> updateOrder(@PathVariable(name = "userId") Long userId,@PathVariable(name = "orderId") Long orderId,@PathVariable(name = "status") String  status) {
+		return new ResponseEntity(orderService.orderStatus(userId, orderId, status), HttpStatus.OK) ;
+		
+	}
 	@DeleteMapping("/{id}")
-	public ResponseEntity deleteOrder(@PathVariable(name="id") Long id) {
-		orderService.deleteOrder(id);
-		return new ResponseEntity(HttpStatus.OK); 
+	public ResponseEntity<OrderDto> deleteOrder(@PathVariable(name="id") Long id) {
+		return new ResponseEntity(orderService.cancelOrder(id), HttpStatus.OK) ; 
 	}
 
 }
