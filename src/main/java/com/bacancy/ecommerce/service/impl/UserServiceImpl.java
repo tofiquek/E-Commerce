@@ -40,11 +40,14 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto getUserById(Long id) {
+		logger.info("getUserByID Method Started");
 		Optional<User> userOptional = userRepository.findById(id);
 		if(!userOptional.isPresent()) {
+			logger.error("User Not found By id "+id);
 			throw new UserNotFoundException("User not found by id "+id);
 		}
 		UserDto userDto = modelMapper.map(userOptional.get(), UserDto.class);
+		logger.info("getUserById Method Ended");
 		return userDto;
 	}
 

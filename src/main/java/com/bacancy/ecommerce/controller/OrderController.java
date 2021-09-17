@@ -2,6 +2,10 @@ package com.bacancy.ecommerce.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +28,15 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
+	@Autowired
+	private HttpServletRequest request;
+	
+	Logger logger = LoggerFactory.getLogger(OrderController.class);
+	
 	@GetMapping
 	public ResponseEntity<List<OrderDto>> findAllOrders(){
+		logger.info("findAllOrders method started");
+		logger.info("URI = "+ request.getRequestURI());
 		List<OrderDto> orders = orderService.allOrders();
 		return new ResponseEntity(orders, HttpStatus.OK);
 	}

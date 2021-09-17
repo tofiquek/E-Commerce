@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,8 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+	
 	public final String PLACED = "Placed";
 	public final String CONFIRM = "Confirm";
 	public final String CANCEL = "Cancel";
@@ -48,6 +52,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public OrderDto addOrder(Long userId, Long productId, OrderDto orderDto) {
+		logger.info("addOrder Method Started");
 		UserDto userDto = userService.getUserById(userId);
 		ProductDto productDto = productService.getProductById(productId);
 		orderDto.setUser(userDto);
@@ -66,6 +71,7 @@ public class OrderServiceImpl implements OrderService{
 		orderTrackDto.setDate(LocalDate.now());
 		orderTrackService.addOrderTrack(savedOrderDto.getId(), orderTrackDto);
 		}
+		logger.info("addOrder Method Ended");
 		return savedOrderDto;
 	}
 	
@@ -73,30 +79,38 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public OrderDto getOrderById(Long id) {
+		logger.info("getOrderById Method Started");
 		Optional<Order> orderOptional = orderRepository.findById(id);
 		if(!orderOptional.isPresent()) {
+			logger.error("Order by Id = "+id+" is not found");
 			throw new OrderNotFoundException("Order not Found Exception by id "+id);
 		}
 		OrderDto	orderDto = modelMapper.map(orderOptional.get(), OrderDto.class);
+		logger.info("getOrderById Method Ended");
 		return orderDto;
 	}
 
 	@Override
 	public List<OrderDto> allOrders() {
+		logger.info("allOrders Method Started");
 		List<Order> orders= orderRepository.findAll(); 
 		List<OrderDto> ordersDto = orders.stream().map(order -> modelMapper.map(order, OrderDto.class)).collect(Collectors.toList());
+		logger.info("allOrders Method Ended");
 		return ordersDto;
 	}
 
 	@Override
 	public void deleteOrder(Long id) {
+		logger.info("deleteOrder Method Started");
 		orderRepository.deleteById(id);
+		logger.info("deleteOrder Method Started");
 	}
 
 
 
 	@Override
 	public OrderDto orderStatus(Long userId, Long orderId, String status) {
+		logger.info("orderStatus Method Started");
 		UserDto userDto = userService.getUserById(userId);
 		if(userDto.getRoleId()!=0) {
 			throw new NotAccessAbleException("Only admin can Confirm or Dilivered the Order");
@@ -117,6 +131,7 @@ public class OrderServiceImpl implements OrderService{
 		orderTrackDto.setDate(LocalDate.now());
 		orderTrackService.addOrderTrack(savedOrderDto.getId(), orderTrackDto);
 		}
+		logger.info("orderStatus Method Ended");
 		return savedOrderDto;
 	}
 
@@ -124,6 +139,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public OrderDto cancelOrder( Long orderId) {
+		logger.info("cancelOrder Method Started");
 		OrderDto orderDto = getOrderById(orderId);
 			orderDto.setStatus(CANCEL);
 		ProductDto productDto = orderDto.getProduct();
@@ -138,6 +154,7 @@ public class OrderServiceImpl implements OrderService{
 			orderTrackDto.setDate(LocalDate.now());
 			orderTrackService.addOrderTrack(savedOrderDto.getId(), orderTrackDto);
 		}
+		logger.info("cancelOrder Method Ended");
 		return savedOrderDto;
 	
 	}
