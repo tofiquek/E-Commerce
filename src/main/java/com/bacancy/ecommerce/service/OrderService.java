@@ -1,5 +1,6 @@
 package com.bacancy.ecommerce.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.bacancy.ecommerce.dto.OrderDto;
@@ -17,5 +18,7 @@ public interface OrderService {
 	List<OrderDto> allOrders();
 
 	void deleteOrder(Long id);
+	
+	List<OrderDto> allOrdersByRange(Date startDate,Date endDate);
 
 }

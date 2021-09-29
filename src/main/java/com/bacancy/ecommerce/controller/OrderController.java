@@ -1,5 +1,7 @@
 package com.bacancy.ecommerce.controller;
 
+
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,12 @@ public class OrderController {
 	@GetMapping
 	public ResponseEntity<List<OrderDto>> findAllOrders(){
 		List<OrderDto> orders = orderService.allOrders();
+		return new ResponseEntity(orders, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{startDate}/{endDate}")
+	public ResponseEntity<List<OrderDto>> findAllOrdersByRange(@PathVariable(name="startDate")Date startDate,@PathVariable(name = "endDate") Date endDate){
+		List<OrderDto> orders = orderService.allOrdersByRange(startDate, endDate);
 		return new ResponseEntity(orders, HttpStatus.OK);
 	}
 	

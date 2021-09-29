@@ -1,5 +1,6 @@
 package com.bacancy.ecommerce.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -14,7 +15,7 @@ public class OrderDto {
 	
 	private String payment;
 	
-	private Date orderDate;
+	private LocalDate orderDate;
 	
 	private ProductDto product;
 	private UserDto user;
@@ -54,10 +55,11 @@ public class OrderDto {
 	public void setPayment(String payment) {
 		this.payment = payment;
 	}
-	public Date getOrderDate() {
+	
+	public LocalDate getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
 	}
 	public ProductDto getProduct() {

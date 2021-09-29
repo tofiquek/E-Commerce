@@ -53,7 +53,8 @@ public class OrderServiceImpl implements OrderService{
 		orderDto.setUser(userDto);
 		orderDto.setProduct(productDto);
 		orderDto.setAmount(productDto.getPrice()*orderDto.getQuantity());
-		orderDto.setOrderDate(new Date());
+		orderDto.setOrderDate(LocalDate.now());
+		System.out.println(orderDto.getOrderDate());
 		orderDto.setStatus(PLACED);
 		Order order = modelMapper.map(orderDto, Order.class);
 		Order savedOrder = orderRepository.save(order);
@@ -142,6 +143,11 @@ public class OrderServiceImpl implements OrderService{
 	
 	}
 	
-	
+	@Override
+	public List<OrderDto> allOrdersByRange(Date startDate,Date endDate) {
+		List<Order> orders= orderRepository.findAllOrderByDateRange(startDate, endDate); 
+		List<OrderDto> ordersDto = orders.stream().map(order -> modelMapper.map(order, OrderDto.class)).collect(Collectors.toList());
+		return ordersDto;
+	}
 
 }
