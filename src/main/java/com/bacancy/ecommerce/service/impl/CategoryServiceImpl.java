@@ -80,6 +80,7 @@ public class CategoryServiceImpl implements CategoryService{
 		logger.info("updateCategory Method Started");
 		UserDto userDto = userService.getUserById(userId);
 		if(userDto.getRoleId()!=0) {
+			logger.error("Client has not Access to Update Category");
 			throw new NotAccessAbleException("Client has not Access to Update Category");
 		}
 		Category category = modelMapper.map(categoryDto, Category.class);

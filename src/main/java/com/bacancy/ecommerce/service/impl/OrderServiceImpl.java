@@ -114,13 +114,16 @@ public class OrderServiceImpl implements OrderService{
 		logger.info("orderStatus Method Started");
 		UserDto userDto = userService.getUserById(userId);
 		if(userDto.getRoleId()!=0) {
+			logger.error("Only admin can Confirm or Dilivered the Order");
 			throw new NotAccessAbleException("Only admin can Confirm or Dilivered the Order");
 		}
 		OrderDto orderDto = getOrderById(orderId);
 		if(status.equalsIgnoreCase(CONFIRM)) {
+			logger.info("Status is Confirm");
 			orderDto.setStatus(CONFIRM);
 		}
 		if(orderDto.getStatus().equalsIgnoreCase(CONFIRM) && status.equalsIgnoreCase(DILIVERED) ) {
+			logger.info("Status is Dilivered");
 			orderDto.setStatus(DILIVERED);
 		}
 		Order order = modelMapper.map(orderDto, Order.class);
@@ -162,8 +165,10 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Override
 	public List<OrderDto> allOrdersByRange(Date startDate,Date endDate) {
+		logger.info("allOrdersByRange method started");
 		List<Order> orders= orderRepository.findAllOrderByDateRange(startDate, endDate); 
 		List<OrderDto> ordersDto = orders.stream().map(order -> modelMapper.map(order, OrderDto.class)).collect(Collectors.toList());
+		logger.info("allOrdersByRange method ended");
 		return ordersDto;
 	}
 

@@ -2,6 +2,10 @@ package com.bacancy.ecommerce.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,32 +29,50 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
+	@Autowired
+	private HttpServletRequest request;
+	
+	Logger logger = LoggerFactory.getLogger(OrderController.class);
+	
 	@GetMapping
 	public ResponseEntity<List<CategoryDto>> findAllCategories(){
+		logger.info("findAllCategories method started & Request URI = "+ request.getRequestURI());
 		List<CategoryDto> categories = categoryService.allCategory();
+		logger.info("findAllCategories method Ended & Response Generated");
 		return new ResponseEntity(categories, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoryDto> findCategory(@PathVariable(name = "id") Long id) {
-		return new ResponseEntity( categoryService.getCategoryById(id),HttpStatus.OK);
+		logger.info("findCategory method started & Request URI = "+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity( categoryService.getCategoryById(id),HttpStatus.OK);
+		logger.info("findCategory method Ended & Response Generated");
+		return responseEntity;
 	}
 	
 	@PostMapping("/{userId}")
 	public ResponseEntity<UserDto> saveCategory(@PathVariable(name = "userId") Long userId,@RequestBody CategoryDto categoryDto) {
-		return new ResponseEntity(categoryService.addCategory(userId, categoryDto), HttpStatus.OK) ;
+		logger.info("saveCategory method started & Request URI = "+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity(categoryService.addCategory(userId, categoryDto), HttpStatus.OK);
+		logger.info("saveCategory method Ended & Response Generated");
+		return responseEntity ;
 		
 	}
 	
 	@PutMapping("/{userId}")
 	public ResponseEntity<UserDto> updateCategory(@PathVariable(name = "userId") Long userId,@RequestBody CategoryDto categoryDto) {
-		return new ResponseEntity(categoryService.updateCategory(userId, categoryDto), HttpStatus.OK) ;
+		logger.info("updateCategory method started & Request URI = "+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity(categoryService.updateCategory(userId, categoryDto), HttpStatus.OK);
+		logger.info("updateCategory method Ended & Response Generated");
+		return responseEntity ;
 		
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity deleteCategory(@PathVariable(name="id") Long id) {
+		logger.info("deleteCategory method started & Request URI = "+ request.getRequestURI());
 		categoryService.deleteCategory(id);
+		logger.info("deleteCategory method Ended & Response Generated");
 		return new ResponseEntity(HttpStatus.OK); 
 	}
 }

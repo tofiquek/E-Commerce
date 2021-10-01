@@ -37,37 +37,54 @@ public class OrderController {
 	
 	@GetMapping
 	public ResponseEntity<List<OrderDto>> findAllOrders(){
-		logger.info("findAllOrders method started");
-		logger.info("URI = "+ request.getRequestURI());
+		logger.info("findAllOrders method started & Request URI = "+ request.getRequestURI());
 		List<OrderDto> orders = orderService.allOrders();
-		return new ResponseEntity(orders, HttpStatus.OK);
+		ResponseEntity responseEntity = new ResponseEntity(orders, HttpStatus.OK);
+		logger.info("findAllOrders method Ended & Response Generated");
+		return responseEntity;
 	}
 	
 	@GetMapping("/{startDate}/{endDate}")
 	public ResponseEntity<List<OrderDto>> findAllOrdersByRange(@PathVariable(name="startDate")Date startDate,@PathVariable(name = "endDate") Date endDate){
+		logger.info("findAllOrdersByRange method started & Request URI = "+ request.getRequestURI());
 		List<OrderDto> orders = orderService.allOrdersByRange(startDate, endDate);
-		return new ResponseEntity(orders, HttpStatus.OK);
+		
+		ResponseEntity responseEntity = new ResponseEntity(orders, HttpStatus.OK);
+		logger.info("findAllOrdersByRange method Ended & Response Generated");
+		return responseEntity;
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<OrderDto> findOrder(@PathVariable(name = "id") Long id) {
-		return new ResponseEntity( orderService.getOrderById(id),HttpStatus.OK);
+		logger.info("findOrder method started & Request URI = "+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity( orderService.getOrderById(id),HttpStatus.OK);
+		logger.info("findOrder method Ended & Response Generated");
+		return responseEntity;
 	}
 	
 	@PostMapping("/{userId}/{productId}")
 	public ResponseEntity<OrderDto> saveOrder(@PathVariable(name = "userId") Long userId,@PathVariable(name = "productId") Long productId,@RequestBody OrderDto orderDto) {
-		return new ResponseEntity(orderService.addOrder(userId, productId, orderDto), HttpStatus.OK) ;
+		logger.info("saveOrder method started & Request URI = "+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity(orderService.addOrder(userId, productId, orderDto), HttpStatus.OK);
+		logger.info("saveOrder method Ended & Response Generated");
+		return responseEntity ;
 		
 	}
 	
 	@PutMapping("/{userId}/{orderId}/{status}")
 	public ResponseEntity<OrderDto> updateOrder(@PathVariable(name = "userId") Long userId,@PathVariable(name = "orderId") Long orderId,@PathVariable(name = "status") String  status) {
-		return new ResponseEntity(orderService.orderStatus(userId, orderId, status), HttpStatus.OK) ;
+		logger.info("updateOrder method started & Request URI = "+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity(orderService.orderStatus(userId, orderId, status), HttpStatus.OK);
+		logger.info("updateOrder method Ended & Response Generated");
+		return responseEntity ;
 		
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<OrderDto> deleteOrder(@PathVariable(name="id") Long id) {
-		return new ResponseEntity(orderService.cancelOrder(id), HttpStatus.OK) ; 
+		logger.info("deleteOrder method started & Request URI = "+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity(orderService.cancelOrder(id), HttpStatus.OK);
+		logger.info("deleteOrder method ended & response generated");
+		return responseEntity ; 
 	}
 
 }

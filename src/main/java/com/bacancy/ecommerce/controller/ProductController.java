@@ -34,32 +34,35 @@ public class ProductController {
 	
 	@GetMapping
 	public ResponseEntity<List<ProductDto>> findAllProducts(){
-		logger.info("findAllProducts method started");
-		logger.info("URI = "+ request.getRequestURI());
+		logger.info("findAllProducts method started & Request URI = "+ request.getRequestURI());
+		
 		List<ProductDto> products = productService.allProducts();
-		logger.info("findAllProducts method Ended");
-		return new ResponseEntity(products, HttpStatus.OK);
+		ResponseEntity responseEntity = new ResponseEntity(products, HttpStatus.OK);
+		logger.info("findAllProducts method Ended & Response Generated");
+		return responseEntity;
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductDto> findProduct(@PathVariable(name = "id") Long id) {
-		logger.info("findProduct method started");
-		logger.info("URI = "+ request.getRequestURI());
-		return new ResponseEntity( productService.getProductById(id),HttpStatus.OK);
+		logger.info("findProduct method started & Request URI = "+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity( productService.getProductById(id),HttpStatus.OK);
+		logger.info("findProduct method Ended & Response Generated");
+		return responseEntity;
 	}
 	
 	@PostMapping("/{userId}/{categoryId}")
 	public ResponseEntity<ProductDto> saveProduct(@PathVariable(name = "userId") Long userId,@PathVariable(name = "categoryId") Long categoryId,@RequestBody ProductDto productDto) {
-		logger.info("findAllProducts method started");
-		logger.info("URI = "+ request.getRequestURI());
-		return new ResponseEntity(productService.addProduct(userId, categoryId, productDto), HttpStatus.OK) ;
+		logger.info("findAllProducts method started & Request URI = "+ request.getRequestURI());
+		
+		ResponseEntity responseEntity = new ResponseEntity(productService.addProduct(userId, categoryId, productDto), HttpStatus.OK);
+		logger.info("findAllProducts method ended & Response Generated");
+		return responseEntity ;
 		
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity deleteProduct(@PathVariable(name="id") Long id) {
-		logger.info("deleteProduct method started");
-		logger.info("URI = "+ request.getRequestURI());
+		logger.info("deleteProduct method started & Request URI = "+ request.getRequestURI());
 		productService.deleteProduct(id);
 		logger.info("deleteProduct method ended");
 		return new ResponseEntity(HttpStatus.OK); 

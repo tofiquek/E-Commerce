@@ -37,33 +37,35 @@ public class UserController {
 	
 	@GetMapping
 	public ResponseEntity<List<UserDto>> findAllUsers(){
-		logger.info("findAllUser method started");
-		logger.info("URI = "+ request.getRequestURI());
+		logger.info("findAllUser method started & Requested URI = "+request.getRequestURI());
 		List<UserDto> users = userService.allUsers();
-		logger.info("findAllUser method Ended");
-		return new ResponseEntity(users, HttpStatus.OK);
+		ResponseEntity<List<UserDto>> responseEntity = new ResponseEntity(users, HttpStatus.OK);
+		logger.info("findAllUser method Ended & Response Generated");
+		return responseEntity;
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<UserDto> findUser(@PathVariable(name = "id") Long id) {
-		logger.info("findUser method started");
-		logger.info("URI = "+ request.getRequestURI());
-		return new ResponseEntity( userService.getUserById(id),HttpStatus.OK);
+		logger.info("findUser method started & Requested URI ="+ request.getRequestURI());
+		
+		ResponseEntity responseEntity = new ResponseEntity( userService.getUserById(id),HttpStatus.OK);
+		logger.info("findUser method Ended & Response Generated");
+		return responseEntity;
 	}
 	
 	@PostMapping
 	public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
-		logger.info("saveUser method started");
-		logger.info("URI = "+ request.getRequestURI());
-		return new ResponseEntity(userService.addUser(userDto), HttpStatus.OK) ;
+		logger.info("saveUser method started & Requested URI ="+ request.getRequestURI());
+		ResponseEntity responseEntity = new ResponseEntity(userService.addUser(userDto), HttpStatus.OK);
+		logger.info("saveUser method Ended & Response Generated");
+		return responseEntity ;
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity deleteUser(@PathVariable(name="id") Long id) {
-		logger.info("deleteUser method started");
-		logger.info("URI = "+ request.getRequestURI());
+		logger.info("deleteUser method started & Request URI = "+ request.getRequestURI());
 		userService.deleteUser(id);
-		logger.info("deleteUser method Ended");
+		logger.info("deleteUser method Ended & Response Generated");
 		return new ResponseEntity(HttpStatus.OK); 
 	}
 }
