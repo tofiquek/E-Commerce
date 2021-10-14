@@ -22,8 +22,11 @@ public class User {
 	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "role_id")
-	private int roleId;
+	@Column(name = "password")
+	private String password;
+	
+	@Column(name = "role")
+	private String role;
 	
 	@JsonIgnore
 	@OneToOne( cascade = CascadeType.ALL)
@@ -41,17 +44,24 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getRoleId() {
-		return roleId;
+	
+	public String getRole() {
+		return role;
 	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public UserProfile getUserProfile() {
 		return userProfile;
 	}
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

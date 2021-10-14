@@ -23,7 +23,7 @@ import com.bacancy.ecommerce.dto.UserDto;
 import com.bacancy.ecommerce.service.CategoryService;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/admin/categories")
 public class CategoryController {
 
 	@Autowired
@@ -50,7 +50,7 @@ public class CategoryController {
 		return responseEntity;
 	}
 	
-	@PostMapping("/{userId}")
+	@PostMapping("/admin/{userId}")
 	public ResponseEntity<UserDto> saveCategory(@PathVariable(name = "userId") Long userId,@RequestBody CategoryDto categoryDto) {
 		logger.info("saveCategory method started & Request URI = "+ request.getRequestURI());
 		ResponseEntity responseEntity = new ResponseEntity(categoryService.addCategory(userId, categoryDto), HttpStatus.OK);
@@ -59,7 +59,7 @@ public class CategoryController {
 		
 	}
 	
-	@PutMapping("/{userId}")
+	@PutMapping("/admin/{userId}")
 	public ResponseEntity<UserDto> updateCategory(@PathVariable(name = "userId") Long userId,@RequestBody CategoryDto categoryDto) {
 		logger.info("updateCategory method started & Request URI = "+ request.getRequestURI());
 		ResponseEntity responseEntity = new ResponseEntity(categoryService.updateCategory(userId, categoryDto), HttpStatus.OK);
@@ -68,7 +68,7 @@ public class CategoryController {
 		
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/admin/{id}")
 	public ResponseEntity deleteCategory(@PathVariable(name="id") Long id) {
 		logger.info("deleteCategory method started & Request URI = "+ request.getRequestURI());
 		categoryService.deleteCategory(id);

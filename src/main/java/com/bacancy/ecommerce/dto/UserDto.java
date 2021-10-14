@@ -4,7 +4,8 @@ public class UserDto {
 
 	private Long id;
 	private String email;
-	private int roleId;
+	private String role;
+	private String password;
 	private UserProfileDto userProfile;
 	public Long getId() {
 		return id;
@@ -18,17 +19,24 @@ public class UserDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getRoleId() {
-		return roleId;
+	
+	public String getRole() {
+		return role;
 	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public UserProfileDto getUserProfile() {
 		return userProfile;
 	}
 	public void setUserProfile(UserProfileDto userProfile) {
 		this.userProfile = userProfile;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

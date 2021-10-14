@@ -42,10 +42,6 @@ public class ProductServiceImpl implements ProductService{
 	public ProductDto addProduct(Long userId,Long categoryId,ProductDto productDto) {
 		logger.info("addProduct Method Started");
 		UserDto userDto = userService.getUserById(userId);
-		if(userDto.getRoleId()!=0) {
-			logger.error("Client does not have permission to add product user id = "+userDto.getId());
-			throw new NotAccessAbleException("Client does not have permission to add Product");
-		}
 		CategoryDto categoryDto = categoryService.getCategoryById(categoryId);
 		productDto.setUser(userDto);
 		productDto.setCategory(categoryDto);

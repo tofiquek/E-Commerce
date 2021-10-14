@@ -113,10 +113,6 @@ public class OrderServiceImpl implements OrderService{
 	public OrderDto orderStatus(Long userId, Long orderId, String status) {
 		logger.info("orderStatus Method Started");
 		UserDto userDto = userService.getUserById(userId);
-		if(userDto.getRoleId()!=0) {
-			logger.error("Only admin can Confirm or Dilivered the Order");
-			throw new NotAccessAbleException("Only admin can Confirm or Dilivered the Order");
-		}
 		OrderDto orderDto = getOrderById(orderId);
 		if(status.equalsIgnoreCase(CONFIRM)) {
 			logger.info("Status is Confirm");

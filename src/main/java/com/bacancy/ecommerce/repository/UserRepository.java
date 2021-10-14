@@ -8,4 +8,5 @@ import com.bacancy.ecommerce.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
+	User getUserByEmail(String email);
 }
